@@ -11,23 +11,20 @@ jobs:
 
     steps:
       - name: Checkout code
-
-      steps:
-      - name: Checkout Repo
         uses: actions/checkout@v3
 
-        name: setup dotnet
+      - name: setup dotnet
         uses: actions/setup-dotnet@v3
         with:
           dotnet-version: '8.x'
 
-         name: Build Project
-         run: dotnet restore; dotnet publish -o site;
+      - name: Build Project
+        run: dotnet restore; dotnet publish -o site;
 
       - name: create zip file
         run: cd site; zip ../site.zip *;
 
-        name: Deploy to AWS Elastic Beanstalk
+      - name: Deploy to AWS Elastic Beanstalk
         uses: einaregilsson/beanstalk-deploy@v21
         with:
           aws_access_key: ${{ secrets.AWS_ACCESS_KEY_ID }}
